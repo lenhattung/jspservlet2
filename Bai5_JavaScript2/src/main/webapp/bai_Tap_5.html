@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div style="background-color: yellow;" id="my_div" >
+
+		Bài 1: Tạo một input-text, khi người dùng nhập tên, trang web sẽ hiển
+		thị nội dung: “Xin chào “ + tên đã nhập.
+
+		<hr />
+
+		Bài 2: Viết chương trình khi người dùng nhấn nút sẽ thay đổi nội dung
+		của đoạn trong 1 thẻ div (bằng 2 cách).
+
+		<hr />
+		Bài 3: Viết chương trình thay đổi màu nền của thẻ div khi người dùng
+		di chuyển chuột vào khi vực nội bộ của thẻ div.
+
+	</div>
+
+	<button onclick="hidden_div()" id="my_button">Ẩn/Hiện</button>
+<script>
+	var check = "hidden";
+
+	function hidden_div(){
+		//window.alert("Test");
+		var my_div = document.getElementById("my_div");
+		if(check=="hidden"){
+			//my_div.style = "display: none;"
+			my_div.style.display = "none";
+			check = "show";
+		}else{
+			//my_div.style = "display: block;"
+			my_div.style.display = "block";
+			check = "hidden";
+		}
+	}
+	
+</script>
+</body>
+</html>

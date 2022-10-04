@@ -1,0 +1,52 @@
+a {
+	color: red;
+	font-size: 20px;
+}
+
+#indam {
+	font-weight: bold;
+}
+
+.innghieng{
+	font-style:italic; 
+}
+
+h1 {
+	color : black;
+}
+
+h1 {
+	font-weight: bold;
+}
+
+h1 {
+	background: yellow;
+}
+
+h1 {
+	color : black;
+	font-weight: bold;
+	background: yellow;
+}
+
+
+h1 {
+	background: yellow;
+}
+
+h2 {
+	background: yellow;
+}
+
+h3 {
+	background: yellow;
+}
+
+h1, h2, h3 {
+	background: yellow;
+}
+
+/* class maudo áp dụng cho h1*/
+h1.maudo{
+	color: red;
+}

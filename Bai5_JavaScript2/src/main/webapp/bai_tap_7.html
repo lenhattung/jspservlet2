@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+	integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<form action="http://google.com" id="my_form">
+			<div class="mb-3">
+				<label for="exampleInputEmail1" class="form-label">Email
+					address</label> <input type="email" class="form-control"
+					id="exampleInputEmail1" aria-describedby="emailHelp">
+				<div id="emailHelp" class="form-text">We'll never share your
+					email with anyone else.</div>
+			</div>
+			<div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Password</label>
+				<input type="password" class="form-control"
+					id="exampleInputPassword1">
+			</div>
+			<div class="mb-3 form-check">
+				<input type="checkbox" class="form-check-input" id="exampleCheck1">
+				<label class="form-check-label" for="exampleCheck1">Check me
+					out</label>
+			</div>
+			<button type="button" class="btn btn-primary" onclick="my_submit()">Submit</button>
+		</form>
+	</div>
+
+	<script>
+		function my_submit(){
+			var exampleInputEmail1 = document.getElementById("exampleInputEmail1");
+			var exampleInputPassword1 = document.getElementById("exampleInputPassword1");
+
+			var email = exampleInputEmail1.value;
+			var password = exampleInputPassword1.value;
+
+			if(email.length==0 || password.length==0){
+				if (email.length==0){
+					alert("Bạn chưa nhập Email!");
+				}
+	
+				if (password.length==0){
+					alert("Bạn chưa nhập Password!");
+				}
+			}else {
+				var form = document.getElementById("my_form");
+				form.submit();
+			}
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id="my_div">
+	NỘI DUNG BAN ĐẦU
+</div>
+
+<input type="button" id="change1" name="change1" value="Thay đổi"/>
+
+
+<script>
+	// Cách 1
+	var change1 = document.getElementById("change1")
+	change1.onclick = function(){
+		var my_div = document.getElementById("my_div");
+		my_div.innerHTML = "NỘI DUNG BỊ THAY ĐỔI";
+	}
+
+	// Cách 2
+	//function changeText(){
+		//var my_div = document.getElementById("my_div");
+		//my_div.innerHTML = "NỘI DUNG BỊ THAY ĐỔI";
+	//}
+</script>
+
+</body>
+</html>
