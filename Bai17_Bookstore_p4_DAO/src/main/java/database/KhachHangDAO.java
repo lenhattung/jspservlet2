@@ -2,30 +2,30 @@ package database;
 
 import java.util.ArrayList;
 
-import model.SanPham;
+import model.KhachHang;
 import model.TheLoai;
 
 
-public class KhachHangDAO implements DAOInterface<SanPham>{
-	private ArrayList<SanPham> data = new ArrayList<>();
+public class KhachHangDAO implements DAOInterface<KhachHang>{
+	private ArrayList<KhachHang> data = new ArrayList<>();
 	
 	@Override
-	public ArrayList<SanPham> selectAll() {
+	public ArrayList<KhachHang> selectAll() {
 		return this.data;
 	}
 
 	@Override
-	public SanPham selectById(SanPham t) {
-		for (SanPham SanPham : data) {
+	public KhachHang selectById(KhachHang t) {
+		for (KhachHang KhachHang : data) {
 			if(data.equals(t)) {
-				return SanPham;
+				return KhachHang;
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public int insert(SanPham t) {
+	public int insert(KhachHang t) {
 		if (this.selectById(t)==null) {
 			this.data.add(t);
 			return 1;
@@ -34,16 +34,16 @@ public class KhachHangDAO implements DAOInterface<SanPham>{
 	}
 
 	@Override
-	public int insertAll(ArrayList<SanPham> arr) {
+	public int insertAll(ArrayList<KhachHang> arr) {
 		int dem = 0;
-		for (SanPham SanPham : arr) {
-			dem+=this.insert(SanPham);
+		for (KhachHang KhachHang : arr) {
+			dem+=this.insert(KhachHang);
 		}
 		return dem;
 	}
 
 	@Override
-	public int delete(SanPham t) {
+	public int delete(KhachHang t) {
 		if (this.selectById(t)!=null) {
 			this.data.remove(t);
 			return 1;
@@ -52,16 +52,16 @@ public class KhachHangDAO implements DAOInterface<SanPham>{
 	}
 
 	@Override
-	public int deleteAll(ArrayList<SanPham> arr) {
+	public int deleteAll(ArrayList<KhachHang> arr) {
 		int dem = 0;
-		for (SanPham SanPham : arr) {
-			dem+=this.delete(SanPham);
+		for (KhachHang KhachHang : arr) {
+			dem+=this.delete(KhachHang);
 		}
 		return dem;
 	}
 
 	@Override
-	public int update(SanPham t) {
+	public int update(KhachHang t) {
 		if (this.selectById(t)!=null) {
 			this.data.remove(t);
 			this.data.add(t);

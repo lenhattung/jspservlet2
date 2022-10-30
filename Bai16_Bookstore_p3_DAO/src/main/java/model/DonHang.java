@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class DonHang {
 	private String maDonHang;
@@ -120,5 +121,22 @@ public class DonHang {
 
 	public void setNgayGiaoHang(Date ngayGiaoHang) {
 		this.ngayGiaoHang = ngayGiaoHang;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maDonHang);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DonHang other = (DonHang) obj;
+		return Objects.equals(maDonHang, other.maDonHang);
 	}
 }

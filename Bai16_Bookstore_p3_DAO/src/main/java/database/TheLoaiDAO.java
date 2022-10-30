@@ -7,11 +7,11 @@ import model.TheLoai;
 public class TheLoaiDAO {
 	private ArrayList<TheLoai> data = new ArrayList<TheLoai>();
 
-	private ArrayList<TheLoai> selectAll() {
+	public ArrayList<TheLoai> selectAll() {
 		return data;
 	}
 
-	private TheLoai selectById(String Id) {
+	public TheLoai selectById(String Id) {
 		for (TheLoai theLoai : data) {
 			if (theLoai.getMaTheLoai().compareTo(Id) == 0) {
 				return theLoai;
@@ -20,7 +20,7 @@ public class TheLoaiDAO {
 		return null;
 	}
 
-	private int insert(TheLoai theLoai) {
+	public int insert(TheLoai theLoai) {
 		TheLoai check = this.selectById(theLoai.getMaTheLoai());
 		if (check == null) {
 			data.add(theLoai);
@@ -29,7 +29,7 @@ public class TheLoaiDAO {
 		return 0;
 	}
 
-	private int insertAll(ArrayList<TheLoai> list) {
+	public int insertAll(ArrayList<TheLoai> list) {
 		int dem = 0;
 		for (TheLoai theLoai : list) {
 			if (selectById(theLoai.getMaTheLoai()) == null) {
@@ -39,7 +39,7 @@ public class TheLoaiDAO {
 		return dem;
 	}
 
-	private int delete(TheLoai theLoai) {
+	public int delete(TheLoai theLoai) {
 		TheLoai check = this.selectById(theLoai.getMaTheLoai());
 		if (check != null) {
 			data.remove(theLoai);
@@ -48,7 +48,7 @@ public class TheLoaiDAO {
 		return 0;
 	}
 
-	private int deleteAll(ArrayList<TheLoai> list) {
+	public int deleteAll(ArrayList<TheLoai> list) {
 		int dem = 0;
 		for (TheLoai theLoai : list) {
 			TheLoai check = this.selectById(theLoai.getMaTheLoai());
@@ -59,7 +59,7 @@ public class TheLoaiDAO {
 		return dem;
 	}
 
-	private int update(TheLoai theLoai) {
+	public int update(TheLoai theLoai) {
 		TheLoai check = this.selectById(theLoai.getMaTheLoai());
 		if (check != null) {
 			data.remove(check);

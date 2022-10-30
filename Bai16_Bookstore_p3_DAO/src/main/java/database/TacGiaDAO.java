@@ -7,11 +7,11 @@ import model.TacGia;
 public class TacGiaDAO {
 	private ArrayList<TacGia> data =  new ArrayList<TacGia>();
 	
-	private ArrayList<TacGia> selectAll(){
+	public ArrayList<TacGia> selectAll(){
 		return data;
 	}
 	
-	private TacGia selectById(String id) {
+	public TacGia selectById(String id) {
 		TacGia tim = new TacGia();
 		tim.setMaTacGia(id);
 		
@@ -24,7 +24,7 @@ public class TacGiaDAO {
 		return null;
 	}
 	
-	private int insert(TacGia tg) {
+	public int insert(TacGia tg) {
 		TacGia kiemTraTonTai = this.selectById(tg.getMaTacGia());
 		if(kiemTraTonTai==null) {
 			data.add(tg);
@@ -34,7 +34,7 @@ public class TacGiaDAO {
 		}
 	}
 	
-	private int insertAll(ArrayList<TacGia> list) {
+	public int insertAll(ArrayList<TacGia> list) {
 		int dem = 0;
 		for (TacGia tacGia : list) {
 			dem += this.insert(tacGia);
@@ -42,7 +42,7 @@ public class TacGiaDAO {
 		return dem;
 	}
 	
-	private int delete(TacGia tg) {
+	public int delete(TacGia tg) {
 		TacGia kiemTraTonTai = this.selectById(tg.getMaTacGia());
 		if(kiemTraTonTai!=null) {
 			data.remove(tg);
@@ -54,7 +54,7 @@ public class TacGiaDAO {
 	
 	// private int deleteAll(ArrayList<TacGia> list) {}
 	
-	private int update(TacGia tg) {
+	public int update(TacGia tg) {
 		TacGia kiemTraTonTai = this.selectById(tg.getMaTacGia());
 		if(kiemTraTonTai!=null) {
 			data.remove(kiemTraTonTai);

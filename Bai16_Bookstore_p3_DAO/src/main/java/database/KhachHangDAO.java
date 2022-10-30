@@ -8,11 +8,11 @@ import model.KhachHang;
 public class KhachHangDAO {
 	private ArrayList<KhachHang> data = new ArrayList<KhachHang>();
 
-	private ArrayList<KhachHang> selectAll() {
+	public ArrayList<KhachHang> selectAll() {
 		return data;
 	}
 
-	private KhachHang selectById(String id) {
+	public KhachHang selectById(String id) {
 		for (KhachHang KhachHang : data) {
 			if (KhachHang.getMaKhacHang().equals(id)) {
 				return KhachHang;
@@ -21,7 +21,7 @@ public class KhachHangDAO {
 		return null;
 	}
 
-	private int insert(KhachHang khachHang) {
+	public int insert(KhachHang khachHang) {
 		KhachHang kiemTraTonTai = this.selectById(khachHang.getMaKhacHang());
 		if (kiemTraTonTai == null) {
 			data.add(khachHang);
@@ -31,7 +31,7 @@ public class KhachHangDAO {
 		}
 	}
 
-	private int insertAll(ArrayList<KhachHang> list) {
+	public int insertAll(ArrayList<KhachHang> list) {
 		int dem = 0;
 		for (KhachHang KhachHang : list) {
 			dem += this.insert(KhachHang);
@@ -39,7 +39,7 @@ public class KhachHangDAO {
 		return dem;
 	}
 
-	private int delete(KhachHang khachHang) {
+	public int delete(KhachHang khachHang) {
 		KhachHang kiemTraTonTai = this.selectById(khachHang.getMaKhacHang());
 		if (kiemTraTonTai != null) {
 			data.remove(khachHang);
@@ -49,7 +49,7 @@ public class KhachHangDAO {
 		}
 	}
 
-	private int deleteAll(ArrayList<KhachHang> list) {
+	public int deleteAll(ArrayList<KhachHang> list) {
 		int dem = 0;
 		for (KhachHang khachHang : list) {
 			KhachHang kiemTraTonTai = this.selectById(khachHang.getMaKhacHang());
@@ -61,7 +61,7 @@ public class KhachHangDAO {
 		return dem;
 	}
 
-	private int update(KhachHang khachHang) {
+	public int update(KhachHang khachHang) {
 		KhachHang kiemTraTonTai = this.selectById(khachHang.getMaKhacHang());
 		if (kiemTraTonTai != null) {
 			data.remove(kiemTraTonTai);

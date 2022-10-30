@@ -3,15 +3,16 @@ package database;
 import java.util.ArrayList;
 
 import model.ChiTietDonHang;
+import model.DonHang;
 
 public class ChiTietDonHangDAO {
 	private ArrayList<ChiTietDonHang> data = new ArrayList<ChiTietDonHang>();
 
-	private ArrayList<ChiTietDonHang> selectAll() {
+	public ArrayList<ChiTietDonHang> selectAll() {
 		return data;
 	}
 
-	private ChiTietDonHang selectById(String id) {
+	public ChiTietDonHang selectById(String id) {
 		for (ChiTietDonHang ChiTietDonHang : data) {
 			if (ChiTietDonHang.getMaChiTietDonHang().equals(id)) {
 				return ChiTietDonHang;
@@ -20,7 +21,7 @@ public class ChiTietDonHangDAO {
 		return null;
 	}
 
-	private int insert(ChiTietDonHang ChiTietDonHang) {
+	public int insert(ChiTietDonHang ChiTietDonHang) {
 		ChiTietDonHang kiemTraTonTai = this.selectById(ChiTietDonHang.getMaChiTietDonHang());
 		if (kiemTraTonTai == null) {
 			data.add(ChiTietDonHang);
@@ -30,7 +31,7 @@ public class ChiTietDonHangDAO {
 		}
 	}
 
-	private int insertAll(ArrayList<ChiTietDonHang> list) {
+	public int insertAll(ArrayList<ChiTietDonHang> list) {
 		int dem = 0;
 		for (ChiTietDonHang ChiTietDonHang : list) {
 			dem += this.insert(ChiTietDonHang);
@@ -38,7 +39,7 @@ public class ChiTietDonHangDAO {
 		return dem;
 	}
 
-	private int delete(ChiTietDonHang ChiTietDonHang) {
+	public int delete(ChiTietDonHang ChiTietDonHang) {
 		ChiTietDonHang kiemTraTonTai = this.selectById(ChiTietDonHang.getMaChiTietDonHang());
 		if (kiemTraTonTai != null) {
 			data.remove(ChiTietDonHang);
@@ -48,7 +49,7 @@ public class ChiTietDonHangDAO {
 		}
 	}
 
-	private int deleteAll(ArrayList<ChiTietDonHang> list) {
+	public int deleteAll(ArrayList<ChiTietDonHang> list) {
 		int dem = 0;
 		for (ChiTietDonHang ChiTietDonHang : list) {
 			ChiTietDonHang kiemTraTonTai = this.selectById(ChiTietDonHang.getMaChiTietDonHang());
@@ -60,19 +61,17 @@ public class ChiTietDonHangDAO {
 		return dem;
 	}
 	
-	private int deleteAll(DonHang dh) {
+	public int deleteAll(DonHang dh) {
 		int dem = 0;
-		for (ChiTietDonHang ChiTietDonHang : list) {
-			ChiTietDonHang kiemTraTonTai = this.selectById(ChiTietDonHang.getMaChiTietDonHang());
-			if (kiemTraTonTai != null) {
-				data.remove(ChiTietDonHang);
-				dem++;
+		for (ChiTietDonHang chiTietDonHang : data) {
+			if(chiTietDonHang.getDonHang().equals(dh)) {
+				this.delete(chiTietDonHang);
 			}
 		}
 		return dem;
 	}
 
-	private int update(ChiTietDonHang ChiTietDonHang) {
+	public int update(ChiTietDonHang ChiTietDonHang) {
 		ChiTietDonHang kiemTraTonTai = this.selectById(ChiTietDonHang.getMaChiTietDonHang());
 		if (kiemTraTonTai != null) {
 			data.remove(kiemTraTonTai);

@@ -8,11 +8,11 @@ import model.DonHang;
 public class DonHangDAO {
 	private ArrayList<DonHang> data = new ArrayList<DonHang>();
 
-	private ArrayList<DonHang> selectAll() {
+	public ArrayList<DonHang> selectAll() {
 		return data;
 	}
 
-	private DonHang selectById(String id) {
+	public DonHang selectById(String id) {
 		DonHang dh = new DonHang();
 		dh.setMaDonHang(id);
 
@@ -24,7 +24,7 @@ public class DonHangDAO {
 		return null;
 	}
 
-	private int insert(DonHang dh) {
+	public int insert(DonHang dh) {
 		DonHang isCheckDonHang = this.selectById(dh.getMaDonHang());
 		if (isCheckDonHang == null) {
 			data.add(dh);
@@ -34,7 +34,7 @@ public class DonHangDAO {
 		}
 	}
 
-	private int insertAll(ArrayList<DonHang> list) {
+	public int insertAll(ArrayList<DonHang> list) {
 		int count = 0;
 		for (DonHang item : list) {
 			count += this.insert(item);
@@ -42,9 +42,14 @@ public class DonHangDAO {
 		return count;
 	}
 
-	private int delete(DonHang dh) {
+	public int delete(DonHang dh) {
 		DonHang isCheckDonHang = this.selectById(dh.getMaDonHang());
 		if (isCheckDonHang != null) {
+			// Xoa di cac chi tiet don hang
+			ChiTietDonHangDAO ctdh = new ChiTietDonHangDAO();
+			ctdh.deleteAll(dh);
+			
+			// Xoa don hang
 			data.remove(dh);
 			return 1;
 		} else {
@@ -52,7 +57,7 @@ public class DonHangDAO {
 		}
 	}
 
-	private int deleteAll(ArrayList<DonHang> list) {
+	public int deleteAll(ArrayList<DonHang> list) {
 		int count = 0;
 		for (DonHang item : list) {
 			count += this.delete(item);
@@ -60,7 +65,7 @@ public class DonHangDAO {
 		return count;
 	}
 
-	private int update(DonHang dh) {
+	public int update(DonHang dh) {
 		DonHang isCheckDonHang = this.selectById(dh.getMaDonHang());
 		if (isCheckDonHang != null) {
 			data.remove(isCheckDonHang);
