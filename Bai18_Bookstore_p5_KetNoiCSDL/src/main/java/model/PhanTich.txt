@@ -1,0 +1,61 @@
+- 	Sản phẩm:
+	+	Mã sách	
+	+	Tên sách
+	+ 	Tác giả
+	+	Năm xuất bản
+	+ 	Giá nhập
+	+ 	Giá gốc
+	+	Giá bán
+	+ 	Số lượng
+	+	Thể loại
+	+ 	Ngôn ngữ
+	+	Mô tả
+
+-	Tác giả:
+	+ 	Mã tác giả
+	+ 	Họ và tên
+	+	Ngày sinh
+	+	Tiểu sử
+
+-	Thể loại:
+	+ Mã thể loại
+	+ Tên thể loại
+
+- 	Khách hàng:
+	+	Mã khách hàng
+	+ 	Tên đăng nhập
+	+	Mật khẩu
+	+	Họ và tên
+	+	Giới tính
+	+	Địa chỉ
+	+	Địa chỉ	nhận hàng
+	+	Địa chỉ mua hàng
+	+ 	Ngày sinh
+	+ 	Số điện thoại
+	+	Email
+	+	Đăng ký nhận bản tin email
+	
+-	Đơn hàng:
+	+ 	Mã đơn hàng
+	+ 	Khách hàng
+	+ 	Địa chỉ người mua
+	+ 	Địa chỉ nhận hàng
+	+ 	Trạng thái: mới tạo, đang xử lý, đang giao hàng, đã giao hành thành công, trả hàng ...
+	+ 	Hình thức thanh toán / COD
+	+ 	Trang thái thanh toán
+	+ 	Số tiền đã thanh toán
+	+ 	Số tiền con thiếu
+	+	Ngày đặt hàng
+	+	Ngày giao hàng
+
+-	Chi tiết đơn hàng:
+	+ 	Mã chi tiết đơn hàng
+	+	Đơn hàng
+	+	Mã sách
+	+	Số lượng
+	+	Giá bìa
+	+	Giảm giá
+	+ 	Giá bán
+	+	Thuế VAT
+	+	Tổng thành tiền
+		
