@@ -188,7 +188,8 @@ public class DonHangDAO implements DAOInterface<DonHang>{
 				+ ",sotiendathanhtoan=?"
 				+ ",sotienconthieu=?"
 				+ ",ngaydathang=?"
-				+ ",ngaygiaohang=?";
+				+ ",ngaygiaohang=?"
+				+ " WHERE madonhang=?";
 		try {
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, t.getMaDonHang());
@@ -202,6 +203,7 @@ public class DonHangDAO implements DAOInterface<DonHang>{
 			st.setDouble(9, t.getSoTienConThieu());
 			st.setDate(10, t.getNgayDatHang());
 			st.setDate(11, t.getNgayGiaoHang());
+			st.setString(12, t.getMaDonHang());
 			kq = st.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -209,5 +211,21 @@ public class DonHangDAO implements DAOInterface<DonHang>{
 			e.printStackTrace();
 		}
 		return kq;
+	}
+	public static void main(String[] args) {
+//		ArrayList<DonHang> arr = new ArrayList();
+//		arr = new DonHangDAO().selectAll();
+//		for (DonHang donHang : arr) {
+//			System.out.println(donHang.toString());
+//		}
+		DonHang dh = new DonHang();
+		KhachHang kh = new KhachHang();
+		kh.setMaKH("KH001");
+		dh.setMaDonHang("DH002");
+		dh.setDiaChiNguoiMua("abc");
+		dh.setKhachHang(kh);
+		int kq = new DonHangDAO().update(dh);
+//		DonHang donHang = new DonHangDAO().selectById(dh);
+//		System.out.println(donHang.toString());
 	}
 }
