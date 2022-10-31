@@ -1,7 +1,6 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,27 +10,25 @@ import model.SanPham;
 import model.TacGia;
 import model.TheLoai;
 
+public class SanPhamDAO implements DAOInterface<SanPham> {
 
-public class SanPhamDAO implements DAOInterface<SanPham>{
-	private ArrayList<SanPham> data = new ArrayList<>();
-	
 	@Override
 	public ArrayList<SanPham> selectAll() {
 		ArrayList<SanPham> ketQua = new ArrayList<SanPham>();
 		try {
 			// Bước 1: tạo kết nối đến CSDL
 			Connection con = JDBCUtil.getConnection();
-			
+
 			// Bước 2: tạo ra đối tượng statement
 			String sql = "SELECT * FROM sanpham";
 			PreparedStatement st = con.prepareStatement(sql);
-			
+
 			// Bước 3: thực thi câu lệnh SQL
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery();
-			
+
 			// Bước 4:
-			while(rs.next()) {
+			while (rs.next()) {
 				String masanpham = rs.getString("masanpham");
 				String tensanpham = rs.getString("tensanpham");
 				String matacgia = rs.getString("matacgia");
@@ -39,83 +36,205 @@ public class SanPhamDAO implements DAOInterface<SanPham>{
 				double gianhap = rs.getDouble("gianhap");
 				double giagoc = rs.getDouble("giagoc");
 				double giaban = rs.getDouble("giaban");
-				int soluong = (int)rs.getDouble("soluong");
+				int soluong = (int) rs.getDouble("soluong");
 				String matheloai = rs.getString("matheloai");
 				String ngonngu = rs.getString("ngonngu");
 				String mota = rs.getString("mota");
-				
-				TacGia tacGia =(new TacGiaDAO().selectById(new TacGia(matacgia, "", null, "")));
+
+				TacGia tacGia = (new TacGiaDAO().selectById(new TacGia(matacgia, "", null, "")));
 				TheLoai theLoai = (new TheLoaiDAO().selectById(new TheLoai(matheloai, "")));
-				
-				SanPham sp = new SanPham(masanpham, tensanpham, tacGia, namxuatban, gianhap, giagoc, giaban, soluong, theLoai, ngonngu, mota);
+
+				SanPham sp = new SanPham(masanpham, tensanpham, tacGia, namxuatban, gianhap, giagoc, giaban, soluong,
+						theLoai, ngonngu, mota);
 				ketQua.add(sp);
 			}
-			
+
 			// Bước 5:
 			JDBCUtil.closeConnection(con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return ketQua;
 	}
 
-
 	@Override
 	public SanPham selectById(SanPham t) {
-		for (SanPham SanPham : data) {
-			if(data.equals(t)) {
-				return SanPham;
-			}
+		SanPham ketQua = null;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "SELECT * FROM tacgia WHERE masanpham=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaSanPham());
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();
+
+			// Bước 4:
+			String masanpham = rs.getString("masanpham");
+			String tensanpham = rs.getString("tensanpham");
+			String matacgia = rs.getString("matacgia");
+			int namxuatban = rs.getInt("namxuatban");
+			double gianhap = rs.getDouble("gianhap");
+			double giagoc = rs.getDouble("giagoc");
+			double giaban = rs.getDouble("giaban");
+			int soluong = (int) rs.getDouble("soluong");
+			String matheloai = rs.getString("matheloai");
+			String ngonngu = rs.getString("ngonngu");
+			String mota = rs.getString("mota");
+
+			TacGia tacGia = (new TacGiaDAO().selectById(new TacGia(matacgia, "", null, "")));
+			TheLoai theLoai = (new TheLoaiDAO().selectById(new TheLoai(matheloai, "")));
+
+			ketQua = new SanPham(masanpham, tensanpham, tacGia, namxuatban, gianhap, giagoc, giaban, soluong, theLoai,
+					ngonngu, mota);
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+
+		return ketQua;
 	}
 
 	@Override
 	public int insert(SanPham t) {
-		if (this.selectById(t)==null) {
-			this.data.add(t);
-			return 1;
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "INSERT INTO sanpham (" + "masanpham,tensanpham, matacgia, namxuatban,"
+					+ " gianhap, giagoc, giaban, soluong, matheloai, ngonngu, mota) "
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaSanPham());
+			st.setString(2, t.getTenSanPham());
+			st.setString(3, t.getTacGia().getMaTacGia());
+			st.setInt(4, t.getNamXuatBan());
+			st.setDouble(5, t.getGiaNhap());
+			st.setDouble(7, t.getGiaGoc());
+			st.setDouble(8, t.getGiaBan());
+			st.setInt(9, t.getSoLuong());
+			st.setString(10, t.getTheLoai().getMaTheLoai());
+			st.setString(11, t.getMoTa());
+
+			// Bước 3: thực thi câu lệnh SQL
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return 0;
+
+		return ketQua;
 	}
 
 	@Override
 	public int insertAll(ArrayList<SanPham> arr) {
 		int dem = 0;
 		for (SanPham SanPham : arr) {
-			dem+=this.insert(SanPham);
+			dem += this.insert(SanPham);
 		}
 		return dem;
 	}
 
 	@Override
 	public int delete(SanPham t) {
-		if (this.selectById(t)!=null) {
-			this.data.remove(t);
-			return 1;
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "DELETE from sanpham " + " WHERE masanpham=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaSanPham());
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return 0;
+
+		return ketQua;
 	}
 
 	@Override
 	public int deleteAll(ArrayList<SanPham> arr) {
 		int dem = 0;
 		for (SanPham SanPham : arr) {
-			dem+=this.delete(SanPham);
+			dem += this.delete(SanPham);
 		}
 		return dem;
 	}
 
 	@Override
 	public int update(SanPham t) {
-		if (this.selectById(t)!=null) {
-			this.data.remove(t);
-			this.data.add(t);
-			return 1;
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "UPDATE sanpham " + " SET "
+					+ "masanpham =? ,tensanpham=?, matacgia=?, namxuatban=?, gianhap=?, giagoc=?, "
+					+ "giaban=?, soluong=?, matheloai=?, ngonngu=?, mota=?" + " WHERE masanpham=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaSanPham());
+			st.setString(2, t.getTenSanPham());
+			st.setString(3, t.getTacGia().getMaTacGia());
+			st.setInt(4, t.getNamXuatBan());
+			st.setDouble(5, t.getGiaNhap());
+			st.setDouble(7, t.getGiaGoc());
+			st.setDouble(8, t.getGiaBan());
+			st.setInt(9, t.getSoLuong());
+			st.setString(10, t.getTheLoai().getMaTheLoai());
+			st.setString(11, t.getMoTa());
+			st.setString(12, t.getMaSanPham());
+
+			// Bước 3: thực thi câu lệnh SQL
+
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return 0;
+
+		return ketQua;
 	}
 }
-

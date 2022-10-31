@@ -1,85 +1,234 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.ChiTietChiTietDonHang;
 import model.ChiTietDonHang;
 import model.DonHang;
-import model.TheLoai;
+import model.SanPham;
 
-
-public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang>{
-	private ArrayList<ChiTietDonHang> data = new ArrayList<>();
-	
+public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 	@Override
 	public ArrayList<ChiTietDonHang> selectAll() {
-		return this.data;
+		ArrayList<ChiTietDonHang> ketQua = new ArrayList<ChiTietDonHang>();
+
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "SELECT * FROM chitietdonhang";
+			PreparedStatement st = con.prepareStatement(sql);
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();
+
+			// Bước 4:
+
+			while (rs.next()) {
+				String maChiTietDonHang = rs.getString("machitietdonhang");
+				String donhang = rs.getString("donhang");
+				String sanpham = rs.getString("sanpham");
+				double soluong = rs.getDouble("soluong");
+				double giagoc = rs.getDouble("giagoc");
+				double giamgia = rs.getDouble("giamgia");
+				double giaban = rs.getDouble("giaban");
+				double thuevat = rs.getDouble("thuevat");
+				double tongtien = rs.getDouble("tongtien");
+
+				DonHang dh = new DonHangDAO().selectById(new DonHang(donhang, null, "", "", "", "", 0, 0, null, null));
+				SanPham sp = new SanPhamDAO().selectById(new SanPham("", "", null, 0, 0, 0, 0, 0, null, "", ""));
+
+				ChiTietDonHang ctdh = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban,
+						thuevat, tongtien);
+				ketQua.add(ctdh);
+			}
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ketQua;
 	}
 
 	@Override
 	public ChiTietDonHang selectById(ChiTietDonHang t) {
-		for (ChiTietDonHang ChiTietDonHang : data) {
-			if(data.equals(t)) {
-				return ChiTietDonHang;
+		ChiTietDonHang ketQua = null;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "SELECT * FROM chitietdonhang WHERE chitietdonhang=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaChiTietDonHang());
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();
+
+			// Bước 4:
+			while (rs.next()) {
+				String maChiTietDonHang = rs.getString("machitietdonhang");
+				String donhang = rs.getString("donhang");
+				String sanpham = rs.getString("sanpham");
+				double soluong = rs.getDouble("soluong");
+				double giagoc = rs.getDouble("giagoc");
+				double giamgia = rs.getDouble("giamgia");
+				double giaban = rs.getDouble("giaban");
+				double thuevat = rs.getDouble("thuevat");
+				double tongtien = rs.getDouble("tongtien");
+
+				DonHang dh = new DonHangDAO().selectById(new DonHang(donhang, null, "", "", "", "", 0, 0, null, null));
+				SanPham sp = new SanPhamDAO().selectById(new SanPham("", "", null, 0, 0, 0, 0, 0, null, "", ""));
+
+				ChiTietDonHang ctdh = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban,
+						thuevat, tongtien);
+				break;
 			}
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+
+		return ketQua;
 	}
 
 	@Override
 	public int insert(ChiTietDonHang t) {
-		if (this.selectById(t)==null) {
-			this.data.add(t);
-			return 1;
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "INSERT INTO chitietdonhang (machitietdonhang, donhang,sanpham, soluong, giagoc,giamgia,giaban,thuevat,tongtien) "
+					+ " VALUES (?,?,?,?,?,?,?,?,?)";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaChiTietDonHang());
+			st.setString(2, t.getDonHang().getMaDonHang());
+			st.setString(3, t.getSanPham().getMaSanPham());
+			st.setDouble(4, t.getSoLuong());
+			st.setDouble(5, t.getGiaGoc());
+			st.setDouble(7, t.getGiamGia());
+			st.setDouble(6, t.getGiaBan());
+			st.setDouble(8, t.getThueVAT());
+			st.setDouble(9, t.getTongTien());
+			// Bước 3: thực thi câu lệnh SQL
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return 0;
+
+		return ketQua;
 	}
 
 	@Override
 	public int insertAll(ArrayList<ChiTietDonHang> arr) {
 		int dem = 0;
 		for (ChiTietDonHang ChiTietDonHang : arr) {
-			dem+=this.insert(ChiTietDonHang);
+			dem += this.insert(ChiTietDonHang);
 		}
 		return dem;
 	}
 
 	@Override
 	public int delete(ChiTietDonHang t) {
-		if (this.selectById(t)!=null) {
-			this.data.remove(t);
-			return 1;
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "DELETE from chitietdonhang " + " WHERE machitietdonhang=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, t.getMaChiTietDonHang());
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return 0;
+
+		return ketQua;
 	}
 
 	@Override
 	public int deleteAll(ArrayList<ChiTietDonHang> arr) {
 		int dem = 0;
 		for (ChiTietDonHang ChiTietDonHang : arr) {
-			dem+=this.delete(ChiTietDonHang);
-		}
-		return dem;
-	}
-	
-	public int deleteAll(DonHang dh) {
-		int dem = 0;
-		for (ChiTietDonHang chiTietChiTietDonHang : data) {
-			if(chiTietChiTietDonHang.getDonHang().equals(dh)) {
-				this.delete(chiTietChiTietDonHang);
-			}
+			dem += this.delete(ChiTietDonHang);
 		}
 		return dem;
 	}
 
 	@Override
 	public int update(ChiTietDonHang t) {
-		if (this.selectById(t)!=null) {
-			this.data.remove(t);
-			this.data.add(t);
-			return 1;
-		}
-		return 0;
-	}
-}
+		int ketQua = 0;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
 
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "UPDATE chitietdonhang " + " SET " + " hovaten=?" + ", ngaysinh=?" + ", tieusu=?"
+					+ " WHERE maChiTietDonHang=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(2, t.getDonHang().getMaDonHang());
+			st.setString(3, t.getSanPham().getMaSanPham());
+			st.setDouble(4, t.getSoLuong());
+			st.setDouble(5, t.getGiaGoc());
+			st.setDouble(7, t.getGiamGia());
+			st.setDouble(6, t.getGiaBan());
+			st.setDouble(8, t.getThueVAT());
+			st.setDouble(9, t.getTongTien());
+
+			// Bước 3: thực thi câu lệnh SQL
+
+			System.out.println(sql);
+			ketQua = st.executeUpdate();
+
+			// Bước 4:
+			System.out.println("Bạn đã thực thi: " + sql);
+			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ketQua;
+	}
+
+}
