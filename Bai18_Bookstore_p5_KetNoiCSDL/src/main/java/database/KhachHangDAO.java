@@ -1,3 +1,4 @@
+// co sua
 package database;
 
 import java.sql.Connection;
@@ -6,13 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import model.KhachHang;
-import model.TacGia;
-import model.TheLoai;
 
 public class KhachHangDAO implements DAOInterface<KhachHang> {
-	private ArrayList<KhachHang> data = new ArrayList<>();
+
+	public ArrayList<KhachHang> data = new ArrayList<>();
 
 	@Override
 	public ArrayList<KhachHang> selectAll() {
@@ -34,7 +33,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				String maKhacHang = rs.getString("makhachhang");
 				String tenDangNhap = rs.getString("tendangnhap");
 				String matKhau = rs.getString("matkhau");
-				String hoVaTen = rs.getString("hovaten");
+				String hoVaTen = rs.getString("hoten");
 				String gioiTinh = rs.getString("gioitinh");
 				String diaChi = rs.getString("diachi");
 				String diaChiNhanHang = rs.getString("diachinhanhang");
@@ -42,7 +41,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				Date ngaySinh = rs.getDate("ngaysinh");
 				String soDienThoai = rs.getString("sodienthoai");
 				String email = rs.getString("email");
-				boolean dangKyNhanBangTin = rs.getBoolean("dangkynhanbangtin");
+				boolean dangKyNhanBangTin = rs.getBoolean("dangkinhanbangtin");
 
 				KhachHang kh = new KhachHang(maKhacHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi,
 						diaChiNhanHang, diaChiMuaHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
@@ -80,7 +79,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				String maKhacHang = rs.getString("makhachhang");
 				String tenDangNhap = rs.getString("tendangnhap");
 				String matKhau = rs.getString("matkhau");
-				String hoVaTen = rs.getString("hovaten");
+				String hoVaTen = rs.getString("hoten");
 				String gioiTinh = rs.getString("gioitinh");
 				String diaChi = rs.getString("diachi");
 				String diaChiNhanHang = rs.getString("diachinhanhang");
@@ -88,7 +87,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				Date ngaySinh = rs.getDate("ngaysinh");
 				String soDienThoai = rs.getString("sodienthoai");
 				String email = rs.getString("email");
-				boolean dangKyNhanBangTin = rs.getBoolean("dangkynhanbangtin");
+				boolean dangKyNhanBangTin = rs.getBoolean("dangkinhanbangtin");
 
 				ketQua = new KhachHang(maKhacHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi, diaChiNhanHang,
 						diaChiMuaHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
@@ -112,7 +111,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			Connection con = JDBCUtil.getConnection();
 
 			// Bước 2: tạo ra đối tượng statement
-			String sql = "INSERT INTO khachhang (makhachhang, tendangnhap, matkhau, hovaten, gioitinh, diachi, diachinhanhang, diachimuahang, ngaysinh, sodienthoai, email, dangkinhanbangtin) "
+			String sql = "INSERT INTO khachhang (makhachhang, tendangnhap, matkhau, hoten, gioitinh, diachi, diachinhanhang, diachimuahang, ngaysinh, sodienthoai, email, dangkinhanbangtin) "
 					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement st = con.prepareStatement(sql);
@@ -203,9 +202,9 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			Connection con = JDBCUtil.getConnection();
 
 			// Bước 2: tạo ra đối tượng statement
-			String sql = "UPDATE khachhang " + " SET " + " tendangnhap=?" + ", matkhau=?" + ", hovaten=?"
-					+ ", gioitinh=?" + ", diachi=?" + ", diachinhanhang=?" + ", diachimuahang=?" + ", ngaysinh=?"
-					+ ", sodienthoai=?" + ", email=?" + ", dangkinhanbangtin=?" + " WHERE makhachhang=?";
+			String sql = "UPDATE khachhang " + " SET " + " tendangnhap=?" + ", matkhau=?" + ", hoten=?" + ", gioitinh=?"
+					+ ", diachi=?" + ", diachinhanhang=?" + ", diachimuahang=?" + ", ngaysinh=?" + ", sodienthoai=?"
+					+ ", email=?" + ", dangkinhanbangtin=?" + " WHERE makhachhang=?";
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, t.getTenDangNhap());

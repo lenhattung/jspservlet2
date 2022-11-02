@@ -12,6 +12,7 @@ import model.DonHang;
 import model.SanPham;
 
 public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
+
 	@Override
 	public ArrayList<ChiTietDonHang> selectAll() {
 		ArrayList<ChiTietDonHang> ketQua = new ArrayList<ChiTietDonHang>();
@@ -63,11 +64,9 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 	public ChiTietDonHang selectById(ChiTietDonHang t) {
 		ChiTietDonHang ketQua = null;
 		try {
-			// Bước 1: tạo kết nối đến CSDL
 			Connection con = JDBCUtil.getConnection();
 
-			// Bước 2: tạo ra đối tượng statement
-			String sql = "SELECT * FROM chitietdonhang WHERE chitietdonhang=?";
+			String sql = "SELECT * FROM chitietdonhang WHERE machitietdonhang=?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, t.getMaChiTietDonHang());
 
@@ -75,11 +74,10 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery();
 
-			// Bước 4:
 			while (rs.next()) {
 				String maChiTietDonHang = rs.getString("machitietdonhang");
-				String donhang = rs.getString("donhang");
-				String sanpham = rs.getString("sanpham");
+				String donhang = rs.getString("donhang");// o
+				String sanpham = rs.getString("sanpham");// o
 				double soluong = rs.getDouble("soluong");
 				double giagoc = rs.getDouble("giagoc");
 				double giamgia = rs.getDouble("giamgia");
@@ -88,10 +86,10 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 				double tongtien = rs.getDouble("tongtien");
 
 				DonHang dh = new DonHangDAO().selectById(new DonHang(donhang, null, "", "", "", "", 0, 0, null, null));
-				SanPham sp = new SanPhamDAO().selectById(new SanPham("", "", null, 0, 0, 0, 0, 0, null, "", ""));
+				SanPham sp = new SanPhamDAO().selectById(new SanPham(sanpham, "", null, 0, 0, 0, 0, 0, null, "", ""));
 
-				ChiTietDonHang ctdh = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban,
-						thuevat, tongtien);
+				ketQua = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban, thuevat,
+						tongtien);
 				break;
 			}
 			// Bước 5:
@@ -199,29 +197,25 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 			Connection con = JDBCUtil.getConnection();
 
 			// Bước 2: tạo ra đối tượng statement
-			String sql = "UPDATE chitietdonhang " + " SET " + " hovaten=?" + ", ngaysinh=?" + ", tieusu=?"
-					+ " WHERE maChiTietDonHang=?";
+			String sql = "UPDATE chitietdonhang SET donhang=?, sanpham=?, soluong=?, giagoc=?, giamgia=?, giaban=?, thuevat=?, tongtien=?"
+					+ " WHERE machitietdonhang=?";
 
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(2, t.getDonHang().getMaDonHang());
-			st.setString(3, t.getSanPham().getMaSanPham());
-			st.setDouble(4, t.getSoLuong());
-			st.setDouble(5, t.getGiaGoc());
-			st.setDouble(7, t.getGiamGia());
+			st.setString(1, t.getDonHang().getMaDonHang());
+			st.setString(2, t.getSanPham().getMaSanPham());
+			st.setDouble(3, t.getSoLuong());
+			st.setDouble(4, t.getGiaGoc());
+			st.setDouble(5, t.getGiamGia());
 			st.setDouble(6, t.getGiaBan());
-			st.setDouble(8, t.getThueVAT());
-			st.setDouble(9, t.getTongTien());
+			st.setDouble(7, t.getThueVAT());
+			st.setDouble(8, t.getTongTien());
+			st.setString(9, t.getMaChiTietDonHang());
 
 			// Bước 3: thực thi câu lệnh SQL
 
 			System.out.println(sql);
 			ketQua = st.executeUpdate();
 
-			// Bước 4:
-			System.out.println("Bạn đã thực thi: " + sql);
-			System.out.println("Có " + ketQua + " dòng bị thay đổi!");
-
-			// Bước 5:
 			JDBCUtil.closeConnection(con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
