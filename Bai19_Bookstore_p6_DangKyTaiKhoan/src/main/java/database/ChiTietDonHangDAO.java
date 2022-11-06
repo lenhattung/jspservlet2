@@ -33,8 +33,8 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 
 			while (rs.next()) {
 				String maChiTietDonHang = rs.getString("machitietdonhang");
-				String donhang = rs.getString("donhang");
-				String sanpham = rs.getString("sanpham");
+				String madonhang = rs.getString("madonhang");
+				String masanpham = rs.getString("masanpham");
 				double soluong = rs.getDouble("soluong");
 				double giagoc = rs.getDouble("giagoc");
 				double giamgia = rs.getDouble("giamgia");
@@ -42,8 +42,13 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 				double thuevat = rs.getDouble("thuevat");
 				double tongtien = rs.getDouble("tongtien");
 
-				DonHang dh = new DonHangDAO().selectById(new DonHang(donhang, null, "", "", "", "", 0, 0, null, null));
-				SanPham sp = new SanPhamDAO().selectById(new SanPham("", "", null, 0, 0, 0, 0, 0, null, "", ""));
+				DonHang dh1 = new DonHang();
+				dh1.setMaDonHang(madonhang);
+				
+				SanPham sp1 = new SanPham();
+				sp1.setMaSanPham(masanpham);
+				DonHang dh = (new DonHangDAO()).selectById(dh1);
+				SanPham sp = (new SanPhamDAO()).selectById(sp1);
 
 				ChiTietDonHang ctdh = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban,
 						thuevat, tongtien);
@@ -76,8 +81,8 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 
 			while (rs.next()) {
 				String maChiTietDonHang = rs.getString("machitietdonhang");
-				String donhang = rs.getString("donhang");// o
-				String sanpham = rs.getString("sanpham");// o
+				String madonhang = rs.getString("donhang");
+				String masanpham = rs.getString("sanpham");
 				double soluong = rs.getDouble("soluong");
 				double giagoc = rs.getDouble("giagoc");
 				double giamgia = rs.getDouble("giamgia");
@@ -85,9 +90,15 @@ public class ChiTietDonHangDAO implements DAOInterface<ChiTietDonHang> {
 				double thuevat = rs.getDouble("thuevat");
 				double tongtien = rs.getDouble("tongtien");
 
-				DonHang dh = new DonHangDAO().selectById(new DonHang(donhang, null, "", "", "", "", 0, 0, null, null));
-				SanPham sp = new SanPhamDAO().selectById(new SanPham(sanpham, "", null, 0, 0, 0, 0, 0, null, "", ""));
-
+				DonHang dh1 = new DonHang();
+				dh1.setMaDonHang(madonhang);
+				
+				SanPham sp1 = new SanPham();
+				sp1.setMaSanPham(masanpham);
+				
+				DonHang dh = new DonHangDAO().selectById(dh1);
+				SanPham sp = new SanPhamDAO().selectById(sp1);
+				
 				ketQua = new ChiTietDonHang(maChiTietDonHang, dh, sp, soluong, giagoc, giamgia, giaban, thuevat,
 						tongtien);
 				break;

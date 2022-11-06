@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class KhachHang {
-	private String maKhacHang;
+	private String maKhachHang;
 	private String tenDangNhap;
 	private String matKhau; 
 	private String hoVaTen;
@@ -19,10 +19,10 @@ public class KhachHang {
 	public KhachHang() {
 	}
 
-	public KhachHang(String maKhacHang, String tenDangNhap, String matKhau, String hoVaTen, String gioiTinh,
+	public KhachHang(String maKhachHang, String tenDangNhap, String matKhau, String hoVaTen, String gioiTinh,
 			String diaChi, String diaChiNhanHang, String diaChiMuaHang, Date ngaySinh, String soDienThoai, String email,
 			boolean dangKyNhanBangTin) {
-		this.maKhacHang = maKhacHang;
+		this.maKhachHang = maKhachHang;
 		this.tenDangNhap = tenDangNhap;
 		this.matKhau = matKhau;
 		this.hoVaTen = hoVaTen;
@@ -36,12 +36,12 @@ public class KhachHang {
 		this.dangKyNhanBangTin = dangKyNhanBangTin;
 	}
 
-	public String getMaKhacHang() {
-		return maKhacHang;
+	public String getMaKhachHang() {
+		return maKhachHang;
 	}
 
-	public void setMaKhacHang(String maKhacHang) {
-		this.maKhacHang = maKhacHang;
+	public void setMaKhachHang(String maKhachHang) {
+		this.maKhachHang = maKhachHang;
 	}
 
 	public String getTenDangNhap() {
@@ -131,5 +131,6 @@ public class KhachHang {
 	public void setDangKyNhanBangTin(boolean dangKyNhanBangTin) {
 		this.dangKyNhanBangTin = dangKyNhanBangTin;
 	}
+
 	
 }

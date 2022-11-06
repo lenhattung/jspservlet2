@@ -23,21 +23,24 @@ public class DonHangDAO implements DAOInterface<DonHang> {
 			PreparedStatement st = con.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				String maDH = rs.getString(1);
-				String maKH = rs.getString(2);
+				String maDonHang = rs.getString(1);
+				String maKhachHang = rs.getString(2);
 				String diaChiNguoiMua = rs.getString(3);
 				String diaChiNhanHang = rs.getString(4);
 				String trangThai = rs.getString(5);
 				String hinhThucThanhToan = rs.getString(6);
-				double soTienDaThanhToan = rs.getDouble(7);
-				double soTienConThieu = rs.getDouble(8);
-				Date ngayDatHang = rs.getDate(9);
-				Date ngayGiaoHang = rs.getDate(10);
+				String trangThaiThanhToan = rs.getString(7);
+				double soTienDaThanhToan = rs.getDouble(8);
+				double soTienConThieu = rs.getDouble(9);
+				Date ngayDatHang = rs.getDate(10);
+				Date ngayGiaoHang = rs.getDate(11);
 
-				KhachHang khachHang = new KhachHangDAO()
-						.selectById(new KhachHang(maKH, "", "", "", "", "", "", "", null, "", "", false));
-				DonHang dh = new DonHang(maDH, khachHang, diaChiNguoiMua, diaChiNhanHang, trangThai, hinhThucThanhToan,
-						soTienDaThanhToan, soTienConThieu, ngayDatHang, ngayGiaoHang);
+				KhachHang kh1 = new KhachHang();
+				kh1.setMaKhachHang(maKhachHang);
+				
+				KhachHang khachHang = new KhachHangDAO().selectById(kh1);
+				
+				DonHang dh = new DonHang(maDonHang, khachHang, diaChiNguoiMua, diaChiNhanHang, trangThai, hinhThucThanhToan, trangThaiThanhToan, soTienDaThanhToan, soTienConThieu, ngayDatHang, ngayGiaoHang);
 
 				ketQua.add(dh);
 			}
@@ -59,21 +62,24 @@ public class DonHangDAO implements DAOInterface<DonHang> {
 			st.setString(1, t.getMaDonHang());
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				String maDH = rs.getString(1);
-				String maKH = rs.getString(2);
+				String maDonHang = rs.getString(1);
+				String maKhachHang = rs.getString(2);
 				String diaChiNguoiMua = rs.getString(3);
 				String diaChiNhanHang = rs.getString(4);
 				String trangThai = rs.getString(5);
 				String hinhThucThanhToan = rs.getString(6);
-				double soTienDaThanhToan = rs.getDouble(7);
-				double soTienConThieu = rs.getDouble(8);
-				Date ngayDatHang = rs.getDate(9);
-				Date ngayGiaoHang = rs.getDate(10);
+				String trangThaiThanhToan = rs.getString(7);
+				double soTienDaThanhToan = rs.getDouble(8);
+				double soTienConThieu = rs.getDouble(9);
+				Date ngayDatHang = rs.getDate(10);
+				Date ngayGiaoHang = rs.getDate(11);
 
-				KhachHang khachHang = new KhachHangDAO()
-						.selectById(new KhachHang(maKH, "", "", "", "", "", "", "", null, "", "", false));
-				DonHang dh = new DonHang(maDH, khachHang, diaChiNguoiMua, diaChiNhanHang, trangThai, hinhThucThanhToan,
-						soTienDaThanhToan, soTienConThieu, ngayDatHang, ngayGiaoHang);
+				KhachHang kh1 = new KhachHang();
+				kh1.setMaKhachHang(maKhachHang);
+				
+				KhachHang khachHang = new KhachHangDAO().selectById(kh1);
+				
+				DonHang dh = new DonHang(maDonHang, khachHang, diaChiNguoiMua, diaChiNhanHang, trangThai, hinhThucThanhToan, trangThaiThanhToan, soTienDaThanhToan, soTienConThieu, ngayDatHang, ngayGiaoHang);
 
 				ketQua = dh;
 			}
@@ -89,20 +95,21 @@ public class DonHangDAO implements DAOInterface<DonHang> {
 	public int insert(DonHang t) {
 		int kq = 0;
 		Connection con = JDBCUtil.getConnection();
-		String sql = "INSERT INTO donhang(madonhang, khachhang, diachinguoimua, diachinguoinhan, trangthai, thanhtoan,tienthanhtoan, tienthieu,ngaydathang,ngaygiaohang)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO donhang(madonhang, khachhang, diachinguoimua, diachinguoinhan, trangthai, thanhtoan,trangthaithanhtoan ,tienthanhtoan, tienthieu,ngaydathang,ngaygiaohang)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, t.getMaDonHang());
-			st.setString(2, t.getKhachHang().getMaKhacHang());
-			st.setString(3, t.getDiaChiNguoiMua());
+			st.setString(2, t.getKhachHang().getMaKhachHang());
+			st.setString(3, t.getDiaChiMuaHang());
 			st.setString(4, t.getDiaChiNhanHang());
 			st.setString(5, t.getTrangThai());
-			st.setString(6, t.getThanhToan());
-			st.setDouble(7, t.getTienThanhToan());
-			st.setDouble(8, t.getTienThieu());
-			st.setDate(9, t.getNgayDatHang());
-			st.setDate(10, t.getNgayGiaoHang());
+			st.setString(6, t.getHinhThucThanhToan());
+			st.setString(7, t.getTrangThaiThanhToan());
+			st.setDouble(8, t.getSoTienDaThanhToan());
+			st.setDouble(9, t.getSoTienConThieu());
+			st.setDate(10, t.getNgayDatHang());
+			st.setDate(11, t.getNgayGiaoHang());
 
 			kq = st.executeUpdate();
 			con.close();
@@ -153,20 +160,21 @@ public class DonHangDAO implements DAOInterface<DonHang> {
 		Connection con = JDBCUtil.getConnection();
 
 		String sql = "UPDATE donhang" + " SET " + "khachhang=?" + ", diachinguoimua=?" + ",diachinguoinhan=?"
-				+ ",trangthai=?" + ",thanhtoan=?" + ",tienthanhtoan=?" + ",tienthieu=?" + ",ngaydathang=?"
+				+ ",trangthai=?" + ",thanhtoan=?"+ ",trangthaithanhtoan=?" + ",tienthanhtoan=?" + ",tienthieu=?" + ",ngaydathang=?"
 				+ ",ngaygiaohang=?" + " WHERE madonhang=?";
 		try {
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(1, t.getKhachHang().getMaKhacHang());
-			st.setString(2, t.getDiaChiNguoiMua());
-			st.setString(3, t.getDiaChiNhanHang());
-			st.setString(4, t.getTrangThai());
-			st.setString(5, t.getThanhToan());
-			st.setDouble(6, t.getTienThanhToan());
-			st.setDouble(7, t.getTienThieu());
-			st.setDate(8, t.getNgayDatHang());
-			st.setDate(9, t.getNgayGiaoHang());
-			st.setString(10, t.getMaDonHang());
+			st.setString(1, t.getMaDonHang());
+			st.setString(2, t.getKhachHang().getMaKhachHang());
+			st.setString(3, t.getDiaChiMuaHang());
+			st.setString(4, t.getDiaChiNhanHang());
+			st.setString(5, t.getTrangThai());
+			st.setString(6, t.getHinhThucThanhToan());
+			st.setString(7, t.getTrangThaiThanhToan());
+			st.setDouble(8, t.getSoTienDaThanhToan());
+			st.setDouble(9, t.getSoTienConThieu());
+			st.setDate(10, t.getNgayDatHang());
+			st.setDate(11, t.getNgayGiaoHang());
 
 			kq = st.executeUpdate();
 			con.close();
